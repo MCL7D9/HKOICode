@@ -2,15 +2,13 @@
 #include <math.h>
 #include <ctype.h>
 #include <stdlib.h>
-double toFloat(char *str){
-     *(str)='0';
-     return atof(str);
-}
 int main(){
      double num=0;
      char *str;
      scanf("%s",str);
-     num=toFloat(str);
-     printf("%.2f",num);
+     *str="0";
+     num=atof(str);
+     num=(ceil(num/2*10)/10);
+     printf("$%.1f",num);
      return 0;
 }
