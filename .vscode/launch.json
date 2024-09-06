@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "/home/hariseldon/prgm/HKOICode",
-      "program": "/home/hariseldon/prgm/HKOICode/build/Debug/outDebug",
+      "program": "${fileDirname}/a.out",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
