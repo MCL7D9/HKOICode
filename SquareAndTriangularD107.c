@@ -1,25 +1,29 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-
+int judgeTri(long long num){
+     long long modNum=8*num+1;
+     long long sqrtNum=(long long)(sqrt(modNum));
+     return (pow(sqrtNum,2)==modNum);
+}
+int judgeSqu(long long num){
+     long long sqrtNum=(long long)(sqrt(num));
+     return (pow(sqrtNum,2)==num);
+}
 int main(){
-     long long int inp=0;
+     long long inp=0;
      scanf("%lld",&inp);
-     bool isTri=0,isSqu=0;
-     if (pow((long long int)(sqrt(8*inp+1)),2)==(8*inp+1)){
-          isTri=1;
-     }
-     if (sqrt(inp)==(long long int)(sqrt(inp))){
-          isSqu=1;
-     }
+     int isTri=0,isSqu=0;
+     isTri=judgeTri(inp);
+     isSqu=judgeSqu(inp);
      if (isTri && isSqu){
-          printf("Both");
+          printf("Both\n");
      } else if (isSqu) {
-          printf("Square");
+          printf("Square\n");
      } else if (isTri) {
-          printf("Triangular");
+          printf("Triangular\n");
      } else {
-          printf("Neither");
+          printf("Neither\n");
      }
      return 0;
 }
