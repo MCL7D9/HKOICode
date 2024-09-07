@@ -1,4 +1,5 @@
-import math
-x=str(input())
-y=float(x[1::])*10
-print('$'+str((math.ceil(int(y)/2))/10))
+for i in range(10):
+     for j in range(10):
+          print(str(i) +" x "+ j +" = "+str(i*j),end="\t")
+     print()
+

@@ -3,11 +3,20 @@
 #include <ctype.h>
 #include <stdlib.h>
 int main(){
-     int x,y,z;
-     double ans0,ans1;
-     scanf("%d%d%d",&x,&y,&z);
-     ans0=(-y+sqrt(y*y-4*x*y))/2/x;
-     ans1=(-y-sqrt(y*y-4*x*y))/2/x;
-     printf("%f\n%f",ans0,ans1);
+     int a,b,c;
+     double ans0,ans1,dis;
+     scanf("%d%d%d",&a,&b,&c);
+     dis=(pow(b,2)-4*a*c);
+     if (dis<0){
+          printf("None");
+          return 0;
+     }
+     ans0=(-b+sqrt(dis))/2/a;
+     ans1=(-b-sqrt(dis))/2/a;
+     if (ans0==ans1){
+          printf("%.3f",ans0);
+     } else {
+          printf("%.3f %.3f",ans1,ans0);
+     }
      return 0; 
 }

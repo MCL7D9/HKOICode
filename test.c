@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 int main(){
-     char *str;
-     scanf("%s",str);
-     printf("%s",str);
+     int b=2;
+     printf("%f",pow(2,b));
      return 0;
 }
