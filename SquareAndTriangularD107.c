@@ -1,21 +1,25 @@
 #include <stdio.h>
 #include <math.h>
-typedef long long int lli
-lli add(lli num){
-     if (num==1){
-          return 1;
-     } else {
-          return (num+add(num-1));
-     }
-}
+#include <stdbool.h>
 
 int main(){
-     lli inp=0;
-     scanf("%Lf",&x);
-     for (lli i=0;i<inp;i++){
-          if (add(i)==inp){
-               
-          }
+     long long int inp=0;
+     scanf("%lld",&inp);
+     bool isTri=0,isSqu=0;
+     if (pow((long long int)(sqrt(8*inp+1)),2)==(8*inp+1)){
+          isTri=1;
+     }
+     if (sqrt(inp)==(long long int)(sqrt(inp))){
+          isSqu=1;
+     }
+     if (isTri && isSqu){
+          printf("Both");
+     } else if (isSqu) {
+          printf("Square");
+     } else if (isTri) {
+          printf("Triangular");
+     } else {
+          printf("Neither");
      }
      return 0;
 }
