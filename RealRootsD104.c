@@ -11,12 +11,14 @@ int main(){
           printf("None");
           return 0;
      }
-     ans0=(-b+sqrt(dis))/2/a;
-     ans1=(-b-sqrt(dis))/2/a;
-     if (ans0==ans1){
+     ans0=(-b+sqrt(dis))/2.0/a;
+     ans1=(-b-sqrt(dis))/2.0/a;
+     if (dis == 0){
           printf("%.3f",ans0);
-     } else {
+     } else if (ans0>ans1) {
           printf("%.3f %.3f",ans1,ans0);
+     } else {
+          printf("%.3f %.3f",ans0,ans1);
      }
      return 0; 
 }
