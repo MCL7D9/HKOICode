@@ -1,19 +1,21 @@
 #include <stdio.h>
 #include <math.h>
+typedef long long int lli
+lli add(lli num){
+     if (num==1){
+          return 1;
+     } else {
+          return (num+add(num-1));
+     }
+}
 
 int main(){
-     long double x,y,z;
+     lli inp=0;
      scanf("%Lf",&x);
-     y=sqrt(x);
-     z=cbrt(x);
-     if (ceil(y)==y&&ceil(z)==z){
-          printf("Both");
-     } else if (ceil(y)==y){
-          printf("Square");
-     } else if (ceil(z)==z){
-          printf("Triangle");
-     } else {
-          printf("Neither");
+     for (lli i=0;i<inp;i++){
+          if (add(i)==inp){
+               
+          }
      }
      return 0;
 }
