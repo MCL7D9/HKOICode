@@ -16,3 +16,7 @@
 ##### What is the algorithm?
 ###### Method 1: Calculate the MIN of x-distace and y-distance, and add it to the sum. It is because we want to perform diagonal operations first. Then we find out the difference between the two distances, then add it to sum.
 ###### Method 2: Thanks for giving inspiration, Timmy Lan. We can consider the two coordinates as a rectangle, and we try to fit the biggest square in. After it, we add the difference between the longer side of the rectangle and the length of the square to the sum.
+
+### CalculatorD108.c
+##### How does it work?
+###### We can treat the expression as two parts. For example, "a+b\*c", "a+b" and "b\*c", then is the second operand is '*', we treat it first, then we perform calculation with the first part(It is treated as b). Is the second operand isn't '\*', then we just perform calculation as usual.

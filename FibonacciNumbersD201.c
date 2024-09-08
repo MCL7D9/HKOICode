@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 int num(int num){
-     int x=0,y=1,z=0,TEMP;
+     int x=1,y=0,z=0,TEMP;
      while (num--){
           z=x+y;
           x=y;
