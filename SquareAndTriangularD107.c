@@ -4,11 +4,11 @@
 int judgeTri(long long num){
      long long modNum=8*num+1;
      long long sqrtNum=(long long)(sqrt(modNum));
-     return (pow(sqrtNum,2)==modNum);
+     return ((sqrtNum*sqrtNum)==modNum);
 }
 int judgeSqu(long long num){
      long long sqrtNum=(long long)(sqrt(num));
-     return (pow(sqrtNum,2)==num);
+     return ((sqrtNum*sqrtNum)==num);
 }
 int main(){
      long long inp=0;
