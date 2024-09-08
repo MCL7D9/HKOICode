@@ -1,1 +1,1 @@
-print(eval(input()))
+print(0.1+0.2)

@@ -1,21 +1,19 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 int main(){
-     char pos[2],des[2],board[8]={'a','b','c','d','e','f','g','h'};
-     int ls[2][2]={{0}},count=0,xPos=0,yPos=0,xTrue,yTrue;
-     scanf("%2s\n%2s",pos,des);
-     while (board[ls[0][0]-1]!=pos[0]){
-          ls[0][0]=ls[0][0]++;
-     }
-     while (board[ls[1][0]-1]!=pos[0]){
-          ls[1][0]=ls[1][0]++;
-     }
-     ls[0][1]=pos[1];
-     ls[1][1]=des[1];
-     while (ls[0][0]!=ls[1][0]||ls[0][1]!=ls[1][1]){
-          if (ls[0][0]!=ls[0][1]){
-               
-          }
-     }
+     int xStart=0,yStart=0,xDist=0,yDist=0,xLen=0,yLen=0,count=0,diags=0;
+     char inp0[3],inp1[3];
+     scanf("%2s\n%2s",inp0,inp1);
+     xStart=inp0[0]-96;
+     xDist=inp1[0]-96;
+     yStart=inp0[1]-48;
+     yDist=inp1[1]-48;
+     //printf("[%d%d%d%d]",xStart,yStart,xDist,yDist);
+     xLen=(int)abs(xStart-xDist);
+     yLen=(int)abs(yStart-yDist);
+     diags=(int)abs(xLen-yLen);
+     count+=diags;
+     count+=(xLen>yLen)?(xLen-diags):(yLen-diags);
      printf("%d",count);
+     return 0;
 }
