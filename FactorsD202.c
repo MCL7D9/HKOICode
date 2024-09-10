@@ -1,9 +1,18 @@
 #include <stdio.h>
 
 void calc(long int *num){
-     for (long int i=1;i<=*num;i++){
+     long int ls[*num];
+     for (long int i=0;i<*num;i++){
+          *(ls+i)=0;
+     }
+     printf("%d\n",1);
+     for (long int i=2;i<=*num;i++){
           if ((*num%i)==0){
-               printf("%li\n",i);
+               *(ls+i)=i;
+               *(ls+(*num/i))=*num/i;
+          }
+          if (*(ls+i)!=0){
+               printf("%ld\n",*(ls+i));
           }
      }
 }
