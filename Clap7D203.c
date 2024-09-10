@@ -4,7 +4,7 @@
 int main(void){
      int x;
      scanf("%d",&x);
-     for (int i=1;i<=100;i++){
+     for (int i=1;i<=99;i++){
           if ((int)floor(i/10)==x||(i-x)%10==0){
                (i%10==0)?printf("Clap\n"):printf("Clap ");
           } else {
