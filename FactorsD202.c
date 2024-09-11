@@ -1,20 +1,19 @@
 #include <stdio.h>
+#include <math.h>
 
 void calc(long int *num){
-     long int ls[*num];
-     for (long int i=0;i<*num/2;i++){
-          *(ls+i)=0;
-     }
-     printf("%d\n",1);
-     for (long int i=2;i<=*num;i++){
-          if ((*num%i)==0){
-               *((ls+i)/2)=i;
-               *((ls+(*num/i))/2)=*num/i;
-          }
-          if (*(ls+i)!=0){
-               printf("%ld\n",*(ls+i));
+     long int ls[ceil(*num/4)],;
+     printf("1\n");top=0
+     for (long int i=2;i<(*num/2),i++){
+          if (*num%i==0){
+               ls[top]=i;
+               top++;
+               ls[top]=*num/i;
+               top++;
           }
      }
+     
+     printf("%ld",*num);
 }
 
 int main(void){
