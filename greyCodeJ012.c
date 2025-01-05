@@ -6,7 +6,7 @@ int main(){
 	scanf("%d\n%d",&x,&y);
 	for (int i=0;i<(pow(2,x));i++){
 		z=pow(10,((i+8)%x));
-		printf("%03d\n",y);
+		printf("%0*d\n",x,y);
 		if (((int)(y/z))%2==0){
 			y+=z;
 		}else{
