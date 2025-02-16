@@ -1,22 +1,28 @@
-#include <iostream>
-#include <string>
+#include <stdio.h>
+#include <math.h>
 
 int det(int num,int dig){
-	bool stat=true;
+	int stat=1;
+    char ls[100]={"0"};
 	if (num<100) return 1;
-	for (int i=0;i<len-2,stat;i++){
-		if atoi((atoi(num.str()[i])*atoi(num.str()[i+1])).str()[-1]!=atoi(num.str()[i+2])stat=false;
-	}
+	sprintf(ls,"%d",num);
+    int x=ls[0]-48,y=ls[1]-48,z=ls[2]-48;
+    for (int i=0;i<dig-2;i++){
+        if ((x*y)%10!=z) stat=0;
+        x=y;
+        y=z;
+        z=ls[i+3]-48;
+    }
 	return (stat)?1:0;
 }
 
-void main(){
+int main(){
 	int x,sum=0,y,len;
-	cin>>x>>y;
-	bool flag=true;
-	len=(int)log(x)+1
+    scanf("%d\n%d",&x,&y);
+	len=(int)log10(x)+1;
 	for (x;x<=y;x++){
 		sum+=det(x,len);
 	}
-	cout<<sum;
+    printf("%d",sum);
+    return 0;
 }
