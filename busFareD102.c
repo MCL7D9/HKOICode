@@ -7,7 +7,7 @@ int main(){
      char str[5];
      scanf("%5s",str);
      num=atof(str+1);
-     num=(ceil(num/2*10)/10);
+     num=((int)(num/2*10)/10);
      printf("$%.1f",num);
      return 0;
 }

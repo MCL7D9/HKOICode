@@ -1,1 +1,4 @@
-print(0.1+0.2)
+num=int(input())
+ls[], data[]
+for i in range(num):
+    ls+=[str(input())]
