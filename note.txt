@@ -1,0 +1,94 @@
+Here's an enhanced comparison table with **return timing** and **multi-line input handling** added as key columns:
+
+| Function          | End Condition  | Input Handling       | Return Timing      | Multi-line Input? | Stores Content       | Buffer Safety |
+|-------------------|----------------|----------------------|--------------------|-------------------|----------------------|---------------|
+| **`getchar()`**   | EOF/Error      | Char-by-char         | Immediate per char | ❌ No             | Returns single char  | Safe          |
+| **`fgetc()`**     | EOF/Error      | Char-by-char         | Immediate per char | ❌ No             | Returns single char  | Safe          |
+| **`fgets()`**     | `\n`/EOF/Full  | Line-by-line         | On `\n` or EOF     | ✅ Yes            | Keeps `\n` + `\0`    | Safe          |
+| **`gets()`**      | `\n`/EOF       | Line-by-line         | On `\n` or EOF     | ✅ Yes            | Adds `\0` (no `\n`)  | ❌ Unsafe     |
+| **`scanf()`**     | Whitespace/EOF | Format-dependent     | On match/failure   | ✅ Yes*           | Varies by format     | ❌ Risky      |
+| **`getline()`**   | `\n`/EOF       | Line-by-line         | On `\n` or EOF     | ✅ Yes            | Keeps `\n` + `\0`    | Safe          |
+
+---
+
+### **Key Insights on Return Timing & Multi-line Input**
+
+1. **Immediate Return Functions**
+   - `getchar()`/`fgetc()`:
+     - Return **immediately** after each character
+     - Cannot consume multi-line input in one call
+     - Example:
+       ```c
+       while ((c = getchar()) != EOF) { /* processes char-by-char */ }
+       ```
+
+2. **Line-Buffered Functions**
+   - `fgets()`/`getline()`:
+     - Return only after encountering `\n` or EOF
+     - Can consume **full lines** (including multi-line input)
+     - Example:
+       ```c
+       fgets(buf, sizeof(buf), stdin); // Reads until `\n` or buffer full
+       ```
+
+3. **`scanf()`'s Hybrid Behavior**
+   - Return timing depends on format specifier:
+     - `%c`: Immediate per character (like `getchar`)
+     - `%s`/`%[^\n]`: Returns after whitespace/newline
+     - Supports multi-line input **if format allows**
+     - Example:
+       ```c
+       scanf("%[^\n]%*c", buf); // Reads entire line (including spaces)
+       ```
+
+4. **Multi-line Input Notes**
+   - `scanf()` can read multi-line input **only if**:
+     - Using `%[^\n]` or similar scansets
+     - Combined with `%*c` to consume newlines
+   - `getchar()` requires manual loop to handle multiple lines
+   - `fgets()`/`getline()` natively handle multi-line input
+
+---
+
+### **Practical Implications**
+
+| Use Case                     | Best Function         | Why?                          |
+|------------------------------|-----------------------|-------------------------------|
+| **Character-by-character**   | `getchar()`/`fgetc()` | Immediate return, low overhead |
+| **Safe line input**          | `fgets()`/`getline()` | Handles `\n` and buffers safely |
+| **Formatted multi-line**     | `scanf("%[^\n]%*c")`  | Flexible but requires care     |
+| **Unsafe quick input**       | `gets()`              | ❌ Never use (deprecated)      |
+
+---
+
+### **Example: Multi-line Input with `scanf()`**
+```c
+char line1[100], line2[100];
+scanf("%99[^\n]%*c", line1);  // Read first line (skip \n)
+scanf("%99[^\n]%*c", line2);  // Read second line
+```
+> ⚠️ Still risky due to potential buffer overflows. Prefer `fgets()`.
+
+---
+
+### **Example: `getchar()` for Multi-line (Manual)**
+```c
+int c;
+while ((c = getchar()) != EOF) {
+    if (c == '\n') printf("[NEWLINE]");  // Manual multi-line handling
+    putchar(c);
+}
+```
+
+---
+
+### **Summary Table: Return Timing**
+
+| Function          | Returns When...           | Multi-line Capable? |
+|-------------------|---------------------------|---------------------|
+| `getchar()`       | Immediately per character | ❌ No               |
+| `fgets()`         | On `\n` or EOF            | ✅ Yes              |
+| `scanf()`         | Format-dependent          | ✅ Yes (with care)  |
+| `getline()`       | On `\n` or EOF            | ✅ Yes              |
+
+Choose based on whether you need **immediate feedback** (e.g., real-time processing) or **line-based parsing**.
