@@ -1,4 +1,4 @@
-####scrabbleD403.c
+#### scrabbleD403.c
 Well this problem is really frustrating
 See the snippet:
 ```
@@ -24,17 +24,20 @@ I realized the content in for-loop is never executed. And after I switched num t
     }
 ```
 Everything goes well. Why?
-#####First Issue:
+##### First Issue:
 The answer is: num and *word are stored in adjacent memory address, and when I use %d for num of "char" type. %d expects 4 bytes but only 1 was allocated for num, so the overflow data corrupted part of *word.
 
-#####Second Issue:
+##### Second Issue:
 When ```scanf()``` is used, it skips leading blank character, and newline character is left in buffer(not included by ```scanf() ```                     )
 In comparison, ```fget()``` views the first line feed it encounters as the end of input line and the line feed in included in the string.
 Therefore, the \n left by ```scanf()``` is read by ```fget()```.
 
-#####olution:
+##### Solution:
 Think about it, if we use two scanf(), everything is gonna be OK cause the ``` scanf()``` for word is skipping the leading blank.
 
 So apart from the lin feed problem, correcting the data type of num is also the key. We need to make compiler give sufficent space for it so that it doesnt harm the memory of word.
 
 Also, the ```scanf()``` for the number coming before that for the word also solves the problem as the corrupted space allocated for *word will be overwritten later by the input.
+
+##### Coding
+```while (getchar()!='\n');``` cleans out the new line

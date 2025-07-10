@@ -36,7 +36,7 @@ int main()
         for (char i = 0; i < num; i++)
                 printf("%s\n", (ava[i] == true) ? "Yes" : "No");
         return 0;
-        MALLOCFAILURE:
+MALLOCFAILURE:
         printf("FAILED TO MALLOC AN ARRAY\n");
         return 0;
 }
