@@ -1,113 +1,40 @@
-scrabbleD403:
-Well this is a really frustrating problem...
-# Bug Report: Confusing Loop Skipping When Mixing `scanf()` and For-Loops in C
-
-## 1. Overview
-
-A program that reads a string and a count, then iterates over the string in a `for`-loop, behaves correctly when using `fgets()` but mysteriously skips the loop entirely when using two back-to-back `scanf()` calls. This report explains why.
-
----
-
-## 2. Symptoms
-
-- **Working version:**  
-  ```c
-  fgets(word, sizeof(word), stdin);
-  for (int i = 0; word[i] != '\0'; i++) {
-      // loop body runs as expected  
-  }
-  scanf("%d", &num);
-  ```
-  All debug prints inside the loop appear.
-
-- **Broken version:**  
-  ```c
-  scanf("%s", word);
-  scanf("%hd", &num);
-  for (char i = 0; word[i] != '\0'; i++) {
-      // debug prints here never show up  
-  }
-  ```
-  The loop body never executes on the Online Judge, even though `word` printed correctly earlier.
-
----
-
-## 3. Root Causes
-
-1. **Format specifier mismatch and buffer corruption**  
-   - `num` is declared as `char` but read with `%hd` (expects `short *`).  
-   - `scanf("%hd", &num)` writes two bytes into a one-byte storage plus an adjacent byte, corrupting nearby data (often the start of `chara[]` or internal padding).  
-   - As a result, memory holding the string’s terminator or loop counter may be clobbered, causing the loop condition to be false immediately.
-
-2. **Leftover newline in the input buffer**  
-   - `scanf("%s", word)` stops at the first whitespace but does **not** consume the trailing `'\n'`.  
-   - A subsequent `scanf("%d", &num)` would normally skip whitespace, but combined with the wrong type (`%hd` → `char`), it can fail or leave the buffer in an inconsistent state.
-
-3. **Buffered stdout and missing newlines**  
-   - Debug `printf("EXEC");` without `\n` stays in the user-level buffer.  
-   - If the program crashes or exits abnormally (due to memory corruption), buffered output may never flush, making it _appear_ as if the loop never ran.
-
----
-
-## 4. Demonstration of Memory Corruption
-
-```c
-char word[11], num = 0, chara[26] = {0};
-
-// Memory layout (simplified):
-// [ word bytes ... ][ num ][ chara[0] ][ chara[1] ] ...
-
-scanf("%s", word);
-// Input: "HELLO\n"
-// word = "HELLO\0"; '\n' remains in stdin
-
-scanf("%hd", &num);
-// `%hd` writes 2 bytes: one into `num`, one into `chara[0]`
-// chara[0] corrupted → next loop uses bad data
+####scrabbleD403.c
+Well this problem is really frustrating
+See the snippet:
 ```
+    char word[MAX_LEN + 1] = {'\0'}, chara[26] = {0}, tmp[MAX_LEN + 1] = {'\0'}, num=0;
+    bool *ava;
+    fgets(word, sizeof(word), stdin);
+	scanf("%d", &num);
+	printf("%d", word[0]);
+    for (int i = 0; word[i] != '\0'; i++) {
+            chara[word[i] - 'A']++;
+    }
+```
+I realized the content in for-loop is never executed. And after I switched num to int:
+```
+    char word[MAX_LEN + 1] = {'\0'}, chara[26] = {0}, tmp[MAX_LEN + 1] = {'\0'} ;
+	int num=0;
+    bool *ava;
+    fgets(word, sizeof(word), stdin);
+	scanf("%d", &num);
+	printf("%d", word[0]);
+    for (int i = 0; word[i] != '\0'; i++) {
+            chara[word[i] - 'A']++;
+    }
+```
+Everything goes well. Why?
+#####First Issue:
+The answer is: num and *word are stored in adjacent memory address, and when I use %d for num of "char" type. %d expects 4 bytes but only 1 was allocated for num, so the overflow data corrupted part of *word.
 
----
+#####Second Issue:
+When ```scanf()``` is used, it skips leading blank character, and newline character is left in buffer(not included by ```scanf() ```                     )
+In comparison, ```fget()``` views the first line feed it encounters as the end of input line and the line feed in included in the string.
+Therefore, the \n left by ```scanf()``` is read by ```fget()```.
 
-## 5. Why the Loop “Disappears”
+#####olution:
+Think about it, if we use two scanf(), everything is gonna be OK cause the ``` scanf()``` for word is skipping the leading blank.
 
-- **Loop condition check:**  
-  ```c
-  for (char i = 0; word[i] != '\0'; i++) { … }
-  ```
-  If the null terminator in `word` was inadvertently overwritten by the bad `scanf()`, `word[0]` may already be `'\0'`, so the loop never starts.
+So apart from the lin feed problem, correcting the data type of num is also the key. We need to make compiler give sufficent space for it so that it doesnt harm the memory of word.
 
-- **Silent failure of debug prints:**  
-  Due to memory corruption or immediate exit after error, any prints without a newline may never flush, hiding evidence.
-
----
-
-## 6. Recommended Fixes
-
-1. **Match types and format specifiers**  
-   ```c
-   int num;
-   scanf("%s", word);
-   scanf("%d", &num);
-   ```
-
-2. **Clear stray newline**  
-   ```c
-   scanf("%s", word);
-   while (getchar() != '\n');
-   scanf("%d", &num);
-   ```
-
-3. **Prefer buffered input**  
-   ```c
-   char buf[32];
-   fgets(buf, sizeof(buf), stdin);
-   sscanf(buf, "%s", word);
-   fgets(buf, sizeof(buf), stdin);
-   sscanf(buf, "%d", &num);
-   ```
-
----
-
-## 7. Conclusion
-
-Mixing mismatched `scanf` specifiers, stray newlines, and unflushed output creates undefined behavior that can silently skip entire loops. Correcting the type/format mismatch and using line-oriented input (or manual buffer clearing) restores predictable control flow.
+Also, the ```scanf()``` for the number coming before that for the word also solves the problem as the corrupted space allocated for *word will be overwritten later by the input.

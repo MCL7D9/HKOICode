@@ -18,13 +18,14 @@ bool find(char *c, char *w)
 
 int main()
 {
-        char word[MAX_LEN + 1] = {'\0'}, num = 0, chara[26] = {0}, tmp[MAX_LEN + 1] = {'\0'};
+        char word[MAX_LEN + 1] = {'\0'}, chara[26] = {0}, tmp[MAX_LEN + 1] = {'\0'};
+        int num=0;
         bool *ava;
         fgets(word, sizeof(word), stdin);
+        scanf("%d", &num);
         for (int i = 0; word[i] != '\0'; i++) {
                 chara[word[i] - 'A']++;
         }
-        scanf("%d", &num);
         ava = malloc(sizeof(*ava) * num);
         if (ava == NULL)
                 goto MALLOCFAILURE;
