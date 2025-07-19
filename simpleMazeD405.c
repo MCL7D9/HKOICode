@@ -5,7 +5,7 @@ typedef unsigned char uc;
 
 struct pos {
         uc x;
-        ux y;
+        uc y;
 }
 
 struct coord {
@@ -31,14 +31,15 @@ struct map *create_query()
 void enq(struct map *r, pos cod)
 {
         struct coord *tmp;
-        tmp = r.start;
-        while (tmp.next != NULL) tmp = tmp.next;
+        tmp = r -> start;
+        while (tmp.next != NULL) 
+                tmp = tmp.next;
         tmp.next = malloc(sizeof(*tmp));
         if (tmp.next == NULL)
                 goto MALLOCFAILURE;
         tmp.next -> next = NULL;
-        tmp.x = pos.x;
-        tmp.y = pos.y;
+        tmp.next -> x = cod.x;
+        tmp.next -> y = cod.y;
         ++r.size;
 }
 
@@ -78,7 +79,7 @@ struct pos bfs(bool *maze, uc h, uc w)
         current.y = 0;
         enq(q, current.x, current,y);
         while (!is_empty(q)) {
-                current = deq();
+                current = deq()
                 if (current.x == target.x && current.y == target.y)
                         break;
                 tmp.x = current.x + 1;
