@@ -6,7 +6,7 @@ typedef unsigned char uc;
 struct pos {
         uc x;
         uc y;
-}
+};
 
 struct coord {
         uc x;
@@ -17,7 +17,7 @@ struct coord {
 struct map {
         int size;
         struct coord *start;
-}
+};
 
 struct map *create_query()
 {
@@ -66,7 +66,7 @@ struct pos bfs(bool *maze, uc h, uc w)
         if (parents == NULL)
                 goto MALLOCFAILURE;
         for (uc i = 0; i < h; i++) {
-                for (uc j = 0; j < w, j++) {
+                for (uc j = 0; j < w; j++) {
                         (parents + (w * i) + j) -> x = NULL;
                         (parents + (w * i) + j) -> y = NULL;
                 }
