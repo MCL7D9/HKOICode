@@ -28,7 +28,7 @@ struct map *create_query()
         return tmp;
 }
 
-void enq(struct map *r, pos cod)
+void enq(struct map *r, struct pos cod)
 {
         struct coord *tmp;
         tmp = r -> start;
