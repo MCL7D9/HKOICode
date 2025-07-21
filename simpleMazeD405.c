@@ -59,7 +59,7 @@ bool is_empty(struct map)
 }
 
 
-struct pos bfs(bool *maze, uc h, uc w)
+struct pos *bfs(bool *maze, uc h, uc w)
 {
         struct pos *parents = {NULL};
         parents = malloc(sizeof(pos) * h * w);
